@@ -13,7 +13,7 @@ You have to run the commands in this tutorial in `root` previlige. Otherwise you
 
 # Check Docker version and Linux Kernel Version 
 ```
-root@JapanBackup:~# docker version
+root@my-computer:~# docker version
 Client:
  Version:      1.12.6
  API version:  1.24
@@ -30,45 +30,48 @@ Server:
  Built:        Tue Jan 10 20:38:45 2017
  OS/Arch:      linux/amd64
 
-root@JapanBackup:~# uname -r
+root@my-computer:~# uname -r
 4.8.0-30-generic
 ```
 
 From the above commands, we can see that the `docker client` program we use as `docker` command is on version `1.12.6`, the `docker daemon` we use is on version `1.12.6`. Our linux kernel version is on `4.8.0`.
 
-# Pull some images and check images in docker
+# Pull a image
 
 ```
-# We pull an operating system, a lightweight linux called alpine from registry
-root@JapanBackup:~# docker pull alpine
+# We pull an operating system, 
+# a lightweight linux called alpine from registry
+root@my-computer:~# docker pull alpine
 ```
 
 Now `alpine` image is in our local images inventory. We try to check it out.
 
 ```
-# We check the images on our system, the repo name is alpine, the version is latest. it has a size of 3.984 MB
-root@JapanBackup:~# docker images
+# We check the images on our system, 
+# the repo name is alpine, the version is latest. 
+# it has a size of 3.984 MB
+root@my-computer:~# docker images
 REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
 alpine              latest              88e169ea8f46        2 weeks ago         3.984 MB
 ```
 
-# Start an container, and execute an command in container
+# Start a container
 ```
 # Command format: docker run [image name] [command] [command args]
 
 # Check who is the user we log in as in the container
-root@JapanBackup:~# docker run alpine whoami
+root@my-computer:~# docker run alpine whoami
 root
 
 # Check which entry directory we are in as in the container
-root@JapanBackup:~# docker run alpine pwd
+root@my-computer:~# docker run alpine pwd
 /
 
 # Create a file namex abc.txt
-root@JapanBackup:~# docker run alpine touch abc.txt
+root@my-computer:~# docker run alpine touch abc.txt
 
 # Check in the entry directory, what files are in the directory
-root@JapanBackup:~# docker run alpine ls -l
+root@my-computer:~# docker run alpine ls -l
 total 52
 drwxr-xr-x    2 root     root          4096 Dec 26 21:32 bin
 drwxr-xr-x    5 root     root           360 Jan 15 09:30 dev
@@ -88,16 +91,16 @@ drwxr-xr-x    7 root     root          4096 Dec 26 21:32 usr
 drwxr-xr-x   12 root     root          4096 Dec 26 21:32 var
 ```
 
-As we see above, We are logging into the fresh created container with the user `root` and inside the directory `/`. We can create a file `abc.txt` inside the directory, but when we run again and check the directory, it is not there. Why? Because each time we do a 'docker run' command, it will create a new container, and the contaner will be `stop` status once the command you supplied to run is exited.
+As we see above, We are logging into the fresh created container with the user `root` and inside the directory `/`. We can create a file `abc.txt` inside the directory, but when we run again and check the directory, it is not there. Why? Because each time we do a 'docker run' command, it will create a new container, and the contaner will be `stopped` status once the command you supplied to run is exited.
 
 # Check runnning containers and stopped containers
 ```
 # Command format: docker ps [-a]
 # Check running containers
-root@JapanBackup:~# docker ps
+root@my-computer:~# docker ps
 CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
 # Check all containers, including stopped containers
-root@JapanBackup:~# docker ps -a
+root@my-computer:~# docker ps -a
 CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS                      PORTS               NAMES
 332100b9a2b8        alpine              "ls -l"             7 minutes ago       Exited (0) 7 minutes ago                        pedantic_wright
 e764abab6365        alpine              "touch abc.txt"     7 minutes ago       Exited (0) 7 minutes ago                        happy_swartz
@@ -110,9 +113,10 @@ We can see all containers are stopped after the command we executed is finished,
 
 # Run container as a Interactive Mode
 ```
-# Use -i to be interactive mode, use -t to attach a tty console to the container
+# Use -i to be interactive mode.
+# Use -t to attach a tty console to the container
 # We run the first command in container as sh.
-root@JapanBackup:~# docker run -i -t alpine sh
+root@my-computer:~# docker run -i -t alpine sh
 / # ps
 PID   USER     TIME   COMMAND
     1 root       0:00 sh
@@ -131,9 +135,9 @@ We run a container using the alpine image, then we use `i` and `t` flag to indic
 
 
 # Quick Tips
-How to show containers only with ID, without the long input?
+How to show containers only with ID, without the long output?
 ```
-root@JapanBackup:~# docker ps -a -q
+root@my-computer:~# docker ps -a -q
 0a928589cd0c
 9f7d30f9ec54
 332100b9a2b8
